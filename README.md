@@ -1,5 +1,4 @@
-# amazon-scrapper-product
-Scrapper for products amazon
+# Scrapper for products amazon
 
 
 That's one of Amazons' many bot protection features.
