@@ -1,5 +1,13 @@
 # Scrapper for products amazon
 
+*Made by Jaserto*
+
+Steps to follow.
+
+1. Clone the repository
+2. Install the dependencies with npm.
+3. Go to the products file. Include the products you want to scrape.
+4. Finally, run it with npm run start or node index.js.
 
 That's one of Amazons' many bot protection features.
 
