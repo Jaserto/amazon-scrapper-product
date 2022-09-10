@@ -4,7 +4,7 @@
   <img align="center" src="https://user-images.githubusercontent.com/52850238/189504491-2124d45e-7d42-4b5a-88fd-2f1cba8c8e1b.png" width="70">
 </p>
 
- <h1 align="center"><b>Epsilon</b></h1>
+ <h1 align="center"><b>Amazon scrapper product</b></h1>
   <p align="center">
  Scrapper for products amazon
     <br />
