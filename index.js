@@ -56,7 +56,7 @@ class Main {
             }
     };
 
-    static async checkDownPrice(){
+     static async checkDownPrice(){
         const date = new Date()
         date.setDate(date.getDate() - 1);
         const dateYesterday = date.toDateString().split(" ").join("_");
@@ -65,13 +65,12 @@ class Main {
         fs.readFile(`./database/${dateYesterday}`, (err, data) => {
             if (err) throw err;
             let offers = JSON.parse(data);
-            console.log('ESTAS SON LAS OFERTAS1',offers);
+      console.log('checking')
         if(offers){
-          
             for(let i = 0; i < offers.length; i++){
               ofertsCompare.push(offers[i].price[0])
             }
-            console.log('se Vino el checkdownprice', ofertsCompare)
+         
             fs.readFile(`./database/${dateToday}`, (err, data) => {
                 if (err) {
                     console.log('No se encontro el archivo con las ofertas de, ',dateToday)
@@ -85,7 +84,14 @@ class Main {
                 for(let j =0; j< offersToday.length; j++){
                     console.log(ofertsCompare[j], offersToday[j].price[0])
                     if( ofertsCompare[j] > offersToday[j].price[0]){
-                        bot.sendMessage(5070376355, (offersToday[j].title + " ha bajado de precio " + offersToday[j].price[0] +'€' + ` Anterior: ` + ofertsCompare[j] +'€'))
+                        bot.sendMessage(5070376355, (
+                            offersToday[j].title + " ha bajado de precio " 
+                                + offersToday[j].price[0] +'€' + ` Anterior: ` 
+                                + ofertsCompare[j] +'€ ⬇️' + ' ⭐Aquí tienes el enlace: '
+                                + offersToday[j].product
+                        ))
+                    }else if(ofertsCompare[j] === offersToday[j].price[0]){
+                        bot.sendMessage(5070376355, ('🙁 Permanece igual de precio: '+ offersToday[j].title + ' '+offersToday[j].price[0]+'€' ))
                     }
                 }
             }
@@ -241,7 +247,24 @@ bot.on('message', (msg) => {
 
 
 cron.schedule('* * * * *', () => {
+    const dateToday = new Date().toDateString().split(" ").join("_");
+    const path = `./database/${dateToday}`
+
     console.log('Se ejecutó el main')
-    Main.getOffers().then(()=> Main.checkDownPrice() )
- /*    Main.checkDownPrice()  */ 
+   
+       
+            try {
+                if (fs.existsSync(path)) {
+                //file exists
+                console.log('existe')
+                Main.checkDownPrice()
+                  }else{
+                    Main.getOffers()
+                  }
+                } catch(err) {
+                    return
+                }
+        
+       
+   
 })
