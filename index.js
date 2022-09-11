@@ -20,18 +20,21 @@ class Main {
         const shelves = [];
       /*   const fetchShelves = async () => { */
             try {
+               
                 for(let product of products){
+                    
                     let response = await axios.get(product,{
                         headers: {
                             Accept: "application/json",
                             "User-Agent": "axios 0.21.1"
                           }
                     });
-             
+              
                     let html = response.data;
              
                     let $ = cheerio.load(html);
-             
+
+                
                     $('div.a-box.a-last').each((_idx, el) => { 
                         const shelf = $(el)
                         const title = decodeURI( product.split('/', 4)[3]).replaceAll('-', ' ');
@@ -45,7 +48,7 @@ class Main {
                          shelves.push(element)
                       });
                 }
-             
+         
 
                 db.setItem(name, JSON.stringify(shelves))
 
@@ -65,7 +68,7 @@ class Main {
         fs.readFile(`./database/${dateYesterday}`, (err, data) => {
             if (err) throw err;
             let offers = JSON.parse(data);
-      console.log('checking')
+         console.log('checking')
         if(offers){
             for(let i = 0; i < offers.length; i++){
               ofertsCompare.push(offers[i].price[0])
@@ -80,9 +83,9 @@ class Main {
                 let offersToday = JSON.parse(data);
              
             if(offersToday){
-                console.log('ESTAS SON LAS OFERTAS');
+             
                 for(let j =0; j< offersToday.length; j++){
-                    console.log(ofertsCompare[j], offersToday[j].price[0])
+    
                     if( ofertsCompare[j] > offersToday[j].price[0]){
                         bot.sendMessage(5070376355, (
                             offersToday[j].title + " ha bajado de precio " 
@@ -246,7 +249,7 @@ bot.on('message', (msg) => {
 /*  fetchShelves().then((shelves) => console.log(shelves)); */
 
 
-cron.schedule('* * * * *', () => {
+cron.schedule('* * * * * *', () => {
     const dateToday = new Date().toDateString().split(" ").join("_");
     const path = `./database/${dateToday}`
 
