@@ -52,8 +52,6 @@ class Main {
 
                 db.setItem(name, JSON.stringify(shelves))
 
-              /*   console.log(shelves) */
-              /*   return shelves; */
             } catch (error) {
                 throw error;
             }
@@ -77,27 +75,30 @@ class Main {
             fs.readFile(`./database/${dateToday}`, (err, data) => {
                 if (err) {
                     console.log('No se encontro el archivo con las ofertas de, ',dateToday)
-                    throw err
-                    return
-                }
-                let offersToday = JSON.parse(data);
+                    Main.getOffers()
+                   
+                   
+                }else{
+                    let offersToday = JSON.parse(data);
              
-            if(offersToday){
-             
-                for(let j =0; j< offersToday.length; j++){
-    
-                    if( ofertsCompare[j] > offersToday[j].price[0]){
-                        bot.sendMessage(5070376355, (
-                            offersToday[j].title + " ha bajado de precio " 
-                                + offersToday[j].price[0] +'€' + ` Anterior: ` 
-                                + ofertsCompare[j] +'€ ⬇️' + ' ⭐Aquí tienes el enlace: '
-                                + offersToday[j].product
-                        ))
-                    }else if(ofertsCompare[j] === offersToday[j].price[0]){
-                        bot.sendMessage(5070376355, ('🙁 Permanece igual de precio: '+ offersToday[j].title + ' '+offersToday[j].price[0]+'€' ))
+                    if(offersToday){
+                     
+                        for(let j =0; j< offersToday.length; j++){
+            
+                            if( ofertsCompare[j] > offersToday[j].price[0]){
+                                bot.sendMessage(5070376355, (
+                                    offersToday[j].title + " ha bajado de precio " 
+                                        + offersToday[j].price[0] +'€' + ` Anterior: ` 
+                                        + ofertsCompare[j] +'€ ⬇️' + ' ⭐Aquí tienes el enlace: '
+                                        + offersToday[j].product
+                                ))
+                            }else if(ofertsCompare[j] === offersToday[j].price[0]){
+                                bot.sendMessage(5070376355, ('🙁 Permanece igual de precio: '+ offersToday[j].title + ' '+offersToday[j].price[0]+'€' ))
+                            }
+                        }
                     }
                 }
-            }
+             
             });
         }
         });
@@ -155,7 +156,7 @@ bot.on('message', (msg) => {
 
         
 
-       // const response = await axios.get('https://www.amazon.es/s?k=dremmel&__mk_es_ES=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=JM0M4TQV7XI2&sprefix=dremel%2Caps%2C105&ref=nb_sb_noss_2/',{
+    
 /*         const response = await axios.get('https://www.amazon.es/Isoprop%C3%ADlico-Nazza-componentes-electr%C3%B3nicos-Isopropanol/dp/B07CYJLG1S/ref=sr_1_8?crid=3VBSPIVWCMPFI&keywords=alcohol+isopropilico&qid=1662803322&sprefix=alcohol%2Caps%2C97&sr=8-8/',{
             headers: {
                 Accept: "application/json",
@@ -249,7 +250,7 @@ bot.on('message', (msg) => {
 /*  fetchShelves().then((shelves) => console.log(shelves)); */
 
 
-cron.schedule('* * * * * *', () => {
+cron.schedule('0 0 */3 * * *', () => {
     const dateToday = new Date().toDateString().split(" ").join("_");
     const path = `./database/${dateToday}`
 
