@@ -20,9 +20,7 @@ class Main {
         const shelves = [];
       /*   const fetchShelves = async () => { */
             try {
-               
                 for(let product of products){
-                    
                     let response = await axios.get(product,{
                         headers: {
                             Accept: "application/json",
@@ -31,9 +29,7 @@ class Main {
                     });
               
                     let html = response.data;
-             
                     let $ = cheerio.load(html);
-
                 
                     $('div.a-box.a-last').each((_idx, el) => { 
                         const shelf = $(el)
@@ -48,10 +44,7 @@ class Main {
                          shelves.push(element)
                       });
                 }
-         
-
                 db.setItem(name, JSON.stringify(shelves))
-
             } catch (error) {
                 throw error;
             }
@@ -75,16 +68,11 @@ class Main {
             fs.readFile(`./database/${dateToday}`, (err, data) => {
                 if (err) {
                     console.log('No se encontro el archivo con las ofertas de, ',dateToday)
-                    Main.getOffers()
-                   
-                   
+                    Main.getOffers();
                 }else{
                     let offersToday = JSON.parse(data);
-             
                     if(offersToday){
-                     
                         for(let j =0; j< offersToday.length; j++){
-            
                             if( ofertsCompare[j] > offersToday[j].price[0]){
                                 bot.sendMessage(5070376355, (
                                     offersToday[j].title + " ha bajado de precio " 
@@ -256,7 +244,6 @@ cron.schedule('0 0 */3 * * *', () => {
 
     console.log('Se ejecutó el main')
    
-       
             try {
                 if (fs.existsSync(path)) {
                 //file exists
