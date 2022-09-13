@@ -33,7 +33,8 @@ class Main {
                 
                     $('div.a-box.a-last').each((_idx, el) => { 
                         const shelf = $(el)
-                        const title = decodeURI( product.split('/', 4)[3]).replaceAll('-', ' '); 
+                        const titleBefore = product.split('/', 4)[3].replaceAll('-', ' '); 
+                        const title = decodeURI( titleBefore);
                         const price = shelf.find('span.a-price > span.a-offscreen').text().split('€', 1)
                         const link = shelf.find('a.a-link-normal.a-text-normal').attr('href')
                         let element = {
@@ -242,7 +243,7 @@ bot.on('message', (msg) => {
 /*  fetchShelves().then((shelves) => console.log(shelves)); */
 
 
-cron.schedule('10 * * * * *', () => {
+cron.schedule('3 * * * * *', () => {
     const dateToday = new Date().toDateString().split(" ").join("_");
     const path = `./database/${dateToday}`
 
@@ -259,7 +260,4 @@ cron.schedule('10 * * * * *', () => {
                 } catch(err) {
                     return
                 }
-        
-       
-   
 })
