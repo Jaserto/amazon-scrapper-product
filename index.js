@@ -33,7 +33,7 @@ class Main {
                 
                     $('div.a-box.a-last').each((_idx, el) => { 
                         const shelf = $(el)
-                        const title = decodeURI( product.split('/', 4)[3]).replaceAll('-', ' ');
+                        const title = decodeURI( product.split('/', 4)[3]).replaceAll('-', ' '); 
                         const price = shelf.find('span.a-price > span.a-offscreen').text().split('€', 1)
                         const link = shelf.find('a.a-link-normal.a-text-normal').attr('href')
                         let element = {
@@ -42,6 +42,7 @@ class Main {
                             product
                         }
                          shelves.push(element)
+                         console.log(title)
                       });
                 }
                 db.setItem(name, JSON.stringify(shelves))
@@ -70,6 +71,7 @@ class Main {
                     console.log('No se encontro el archivo con las ofertas de, ',dateToday)
                     Main.getOffers();
                 }else{
+                    console.log(offers)
                     let offersToday = JSON.parse(data);
                     if(offersToday){
                         for(let j =0; j< offersToday.length; j++){
@@ -82,6 +84,8 @@ class Main {
                                 ))
                             }else if(ofertsCompare[j] === offersToday[j].price[0]){
                                 bot.sendMessage(5070376355, ('🙁 Permanece igual de precio: '+ offersToday[j].title + ' '+offersToday[j].price[0]+'€' ))
+                            }else{
+                                bot.sendMessage(5070376355, ('🙁 Subió de precio: '+ offersToday[j].title + ' '+offersToday[j].price[0]+'€' ))
                             }
                         }
                     }
@@ -238,7 +242,7 @@ bot.on('message', (msg) => {
 /*  fetchShelves().then((shelves) => console.log(shelves)); */
 
 
-cron.schedule('0 0 */3 * * *', () => {
+cron.schedule('10 * * * * *', () => {
     const dateToday = new Date().toDateString().split(" ").join("_");
     const path = `./database/${dateToday}`
 
