@@ -32,7 +32,7 @@ class Main {
                 
                     $('div.a-box.a-last').each((_idx, el) => { 
                         const shelf = $(el)
-                        const titleBefore = product.split('/', 4)[3].replaceAll('-', ' '); 
+                        const titleBefore = product.toString().split('/', 4)[3].replaceAll('-', ' '); 
                         const title = decodeURI( titleBefore);
                         const price = shelf.find('span.a-price > span.a-offscreen').text().split('€', 1)
                         const link = shelf.find('a.a-link-normal.a-text-normal').attr('href')
